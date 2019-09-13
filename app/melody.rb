@@ -1,5 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sinatra/activerecord'
+require './config/environments' #database configuration
 
 get "/" do
   #should check array size is small to prevent large arrays for DDOS
