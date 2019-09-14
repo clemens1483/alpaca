@@ -1,15 +1,9 @@
-<% if @shift_invalid%>
-  invalid value for shift: '<%= @shift %>'
+<% if @shift_invalid%>invalid value for shift: '<%= @shift %>'
 <% elsif @melody_invalid%>
-  invalid value for melody: '
-  <% @melody.each do |key| %>  
-    <%= key %><%= "," if key != @melody.last %>
-  <% end %>'
+  invalid value for melody: '<% @melody.each do |key| %><%= key %><%= "," if key != @melody.last %><% end %>'
 <% elsif @out_of_range%>
   transposed melody out of range
 <% elsif @keys%>
-  <% @keys.each do |key| %>  
-    <%= key %><%= "," if key != @keys.last %>
-  <% end %>
+  <% @keys.each do |key| %><%= key %><%= "," if key != @keys.last %><% end %>
 <% end %>
 
