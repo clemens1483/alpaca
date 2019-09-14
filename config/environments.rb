@@ -14,5 +14,5 @@ ActiveRecord::Base.establish_connection(
 			:encoding => 'utf8'
 	)
 
-require ".app/controllers/application_controller"
+#require ".app/controllers/application_controller"
 require_all "app"

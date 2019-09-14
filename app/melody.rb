@@ -12,7 +12,7 @@ class MelodiesController < ApplicationController
 	  #converts to integer
 	  shift = params[:shift].to_i
 	  shift_s = params[:shift]
-	  erb :melodyapp
+	  erb :melody
 
 	end
 
