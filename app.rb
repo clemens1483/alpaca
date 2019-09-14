@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/activerecord'
-require './config/environments' #database configuration
+#require './config/environments' #database configuration
 require './models/key'  #load class
 
 set :port, 9292 #set localhost port, alternatively run rackup config.ru to start server
