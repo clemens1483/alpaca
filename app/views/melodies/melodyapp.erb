@@ -1,5 +1,6 @@
 <% if @melody %>
   <% @melody.each do |key| %>  
-    <%= key %>,
+    <%= key %>
+    <%= "," if key != key.last %>
   <% end %>
 <% end %>
