@@ -4,31 +4,42 @@ require 'sinatra/activerecord'
 require './config/environments' #database configuration
 require './models/key'  #load class
 
+set :port, 9292 #set localhost port, alternatively run rackup config.ru to start server
 
-get "/" do
+
+def parameters()
     #create array of notes in melody parameter
 	@melody = params[:melody].upcase.split(",")
 	#shift parameter
 	@shift = params[:shift]
-	#initialise array for ids of notes
-	notes_id_a = []
+end
+
+def id_array()
+#initialise array for ids of notes
+	@notes_id_a = []
 	#checks if each note exists in the database and if it does adds its id to the array notes_id_a
 	@melody.each do |note|
 	  if Key.exists?(name: note)
 	    note_id = Key.where(name: note).pluck(:id).join.to_i
-		notes_id_a << note_id
+		@notes_id_a << note_id
 	  end
 	end
+end	
+
+
+get '/' do
+	parameters()
+	id_array()
 
 	#checks if @shift has the form of an integer
 	if @shift.to_i.to_s == @shift 
         #checks if notes_id_a contains as many notes as @melody in which case all the keys are valid
-        if notes_id_a.length == @melody.length
+        if @notes_id_a.length == @melody.length
           #shifts every member of notes_id_a by shift
-          shift_id_a = notes_id_a.map { |a| a+@shift.to_i }
+          shift_id_a = @notes_id_a.map { |a| a+@shift.to_i }
           #checks if the resulting ids are out of range of the Key table	          
           if shift_id_a.max <= 88
-          	#initialises array for shifted key names used in /views/melody.erb
+            #initialises array for shifted key names used in /views/melody.erb
             @shift_name_a = []
             #finds the name for each key with id in shift_id_a array and adds it to shift_name_a
             shift_id_a.each do |key|
@@ -51,8 +62,6 @@ get "/" do
     end
     #call views/melody.erb
     erb :melody
-
 end
-
 
 

@@ -1,0 +1,10 @@
+
+Melody Transposition
+[32m  should be out of range[0m
+[32m  should be an invalid value for melody[0m
+[32m  should be an invalid value for shift 'hello'[0m
+[32m  should return the melody shifted by 4[0m
+
+Finished in 0.15335 seconds (files took 1.44 seconds to load)
+[32m4 examples, 0 failures[0m
+

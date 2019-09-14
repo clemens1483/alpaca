@@ -3,7 +3,6 @@
   invalid value for melody: '<% @melody.each do |key| %><%= key %><%= "," if key != @melody.last %><% end %>'
 <% elsif @out_of_range%>
   transposed melody out of range
-<% elsif @melody%>
+<% elsif @shift_name_a%>
   <% @shift_name_a.each do |key| %><%= key %><%= "," if key != @shift_name_a.last %><% end %>
 <% end %>
-
