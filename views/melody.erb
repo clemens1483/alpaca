@@ -1,8 +1,5 @@
 <% if @shift_invalid%>invalid value for shift: '<%= @shift %>'
-<% elsif @melody_invalid%>
-  invalid value for melody: '<%= @melody.map{|key| key }.join(",") %>'
-<% elsif @out_of_range%>
-  transposed melody out of range
-<% elsif @s_melody%>
-  <%= @s_melody.map{|key| key }.join(",") %>
+<% elsif @melody_invalid%>invalid value for melody: '<%= @melody.map{|key| key }.join(",") %>'
+<% elsif @out_of_range%>transposed melody out of range
+<% elsif @s_melody%><%= @s_melody.map{|key| key }.join(",") %>
 <% end %>
