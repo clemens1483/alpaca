@@ -1,17 +1,17 @@
 # Melody Transposition
 ## Configuration
-to install the app type
+to install the app run
 ```
-git clone https://github.com/clemens1483/alpaca/
+$ git clone https://github.com/clemens1483/alpaca/
 ```
-in the command line and move the files to desired folder. In the app's directory run
+and move the files to desired folder. In the app's directory run
 ```
-bundle install
+$ bundle install
 ```
 
 ## Execute
 To run the app type
 ```
-ruby app.rb
-curl 'localhost:9292?melody=note1,note2,...&shift=integer1'
+$ ruby app.rb
+$ curl 'localhost:9292?melody=note1,note2,...&shift=integer1'
 ```
