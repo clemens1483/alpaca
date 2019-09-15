@@ -1,4 +1,3 @@
-# Melody Transposition
 ## Configuration
 to install the app run
 ```
@@ -13,5 +12,4 @@ $ bundle install
 To run the app type
 ```
 $ ruby app.rb
-$ curl 'localhost:9292?melody=note1,note2,...&shift=integer1'
 ```
