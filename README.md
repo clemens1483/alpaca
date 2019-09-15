@@ -1,9 +1,16 @@
-# Melody Transpoistion App
-This app can be run in the command line and transposes melodies made up of piano notes.
-
-## Configuration
-go to project directory and run
+##Configuration
+to install the app type
+```
+	git clone https://github.com/clemens1483/alpaca/
+```
+in the command line and move the files to desired folder. In the app's directory run
+```
 	bundle install
+```
+
+##Execute
+To run the app type
+```
 	ruby app.rb
-to run
-	 curl 'localhost:9292?melody=note1,note2,...&shift=integer1'
+	curl 'localhost:9292?melody=note1,note2,...&shift=integer1'
+```

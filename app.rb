@@ -1,67 +1,58 @@
 require 'sinatra'
-require 'sinatra/reloader'
 require 'sinatra/activerecord'
-#require './config/environments' #database configuration
 require './models/key'  #load class
+# require 'sinatra/reloader' only used for development and testing
 
 set :port, 9292 #set localhost port, alternatively run rackup config.ru to start server
 
 
 def parameters()
-    #create array of notes in melody parameter
-	@melody = params[:melody].upcase.split(",")
-	#shift parameter
-	@shift = params[:shift]
+	@melody = params[:melody].upcase.split(",") #create array of notes in melody parameter
+	@shift = params[:shift] #shift parameter
 end
 
-def id_array()
-#initialise array for ids of notes
-	@notes_id_a = []
-	#checks if each note exists in the database and if it does adds its id to the array notes_id_a
-	@melody.each do |note|
-	  if Key.exists?(name: note)
-	    note_id = Key.where(name: note).pluck(:id).join.to_i
-		@notes_id_a << note_id
-	  end
-	end
-end	
 
 
 get '/' do
 	parameters()
-	id_array()
+	melody_db = Key.where(name: @melody).pluck(:id, :name) #array of subarrays [id,name] of notes in @melody
+	melody_db_name = melody_db.map{ |a| a[1]} #array of only names 
 
-	#checks if @shift has the form of an integer
-	if @shift.to_i.to_s == @shift 
-        #checks if notes_id_a contains as many notes as @melody in which case all the keys are valid
-        if @notes_id_a.length == @melody.length
-          #shifts every member of notes_id_a by shift
-          shift_id_a = @notes_id_a.map { |a| a+@shift.to_i }
-          #checks if the resulting ids are out of range of the Key table	          
-          if shift_id_a.max <= 88
-            #initialises array for shifted key names used in /views/melody.erb
-            @shift_name_a = []
-            #finds the name for each key with id in shift_id_a array and adds it to shift_name_a
-            shift_id_a.each do |key|
-              key_name = Key.where(id: key).pluck(:name).join.to_s
-              @shift_name_a << key_name
-            end
-          else
-            #the the ids in shifted array shift_id_a are out of range 
-            @out_of_range = true  #for /views/melody/erb
-          end
+	if @shift.to_i.to_s == @shift #checks if @shift has the form of an integer
 
-        else
-          #the melody contains invalid keys
-          @melody_invalid = true  #for /views/melody/erb
-        end
+		if (@melody - melody_db_name).empty? #checks if each value in melody param is in Key table
+			# for each note in @melody get the corresponding id
+			s_melody_id = [] #initialise array for shifted ids
+			@melody.each do |note|
+				melody_db.each do |notedb|
+					if note == notedb[1] #names match
+						s_melody_id << notedb[0]+@shift.to_i #add shifted (by shift param) id to array
+					end
+				end
+			end
 
-    else
-      #shift is not an integer
-      @shift_invalid = true  #for /views/melody/erb
-    end
-    #call views/melody.erb
-    erb :melody
+			if s_melody_id.max <= 88 #checks if the resulting ids are out of range of the Key table	
+				s_melody_db = Key.where(id: s_melody_id).pluck(:id, :name) #retrieve [id,name] of shifted ids from Key table
+				# for each id in s_melody_id get corresponding key name
+				@s_melody = [] #initalise array for shifted melody
+				s_melody_id.each do |noteid|
+					s_melody_db.each do |s_notedb|
+						if noteid == s_notedb[0] #ids match
+							@s_melody << s_notedb[1] #add corresponding name to array
+						end
+					end
+				end
+			else #shift out of range
+				@out_of_range = true #for out of range error message in /views/melody/erb
+			end
+		else #there is a parameter which is not a note			
+			@melody_invalid = true #for melody invalid error message in /views/melody/erb
+		end
+	else #shift is not an integer
+	    @shift_invalid = true  #for shift invalid error message in /views/melody/erb
+	end
+
+	erb :melody #call views/melody.erb
+
 end
-
 

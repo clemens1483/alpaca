@@ -1,8 +1,8 @@
 <% if @shift_invalid%>invalid value for shift: '<%= @shift %>'
 <% elsif @melody_invalid%>
-  invalid value for melody: '<% @melody.each do |key| %><%= key %><%= "," if key != @melody.last %><% end %>'
+  invalid value for melody: '<%= @melody.map{|key| key }.join(",") %>'
 <% elsif @out_of_range%>
   transposed melody out of range
-<% elsif @shift_name_a%>
-  <% @shift_name_a.each do |key| %><%= key %><%= "," if key != @shift_name_a.last %><% end %>
+<% elsif @s_melody%>
+  <%= @s_melody.map{|key| key }.join(",") %>
 <% end %>

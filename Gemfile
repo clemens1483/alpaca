@@ -11,7 +11,7 @@ gem "rack"
 gem "thin"
 
 group :development, :test do
-  gem "sinatra-contrib" #for reloading server when saving changes
+  gem "sinatra-contrib" #for sinatra/reloader
   gem "rspec" 
   gem "rack-test"
 end
