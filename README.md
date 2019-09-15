@@ -1,5 +1,5 @@
-#Melody Transposition
-##Configuration
+# Melody Transposition
+## Configuration
 to install the app type
 ```
 	git clone https://github.com/clemens1483/alpaca/
@@ -9,7 +9,7 @@ in the command line and move the files to desired folder. In the app's directory
 	bundle install
 ```
 
-##Execute
+## Execute
 To run the app type
 ```
 	ruby app.rb
